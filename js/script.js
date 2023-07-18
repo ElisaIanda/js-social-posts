@@ -56,6 +56,18 @@ const posts = [
     }
 ];
 
+// Imposto ciclo per cambiare la posizione della data con l'indice della stringa created 
+
+for (let i = 0; i < posts.length; i++) {
+
+    // Uso split per dividere created e creare dei sottostringhe di array
+    const date = posts[i].created.split("-");
+
+    
+    posts[i].created = `${date[2]}-${date[1]}-${date[0]}`;
+}
+
+
 // Imposto una funzione con ciclo per stampare i post
 
 printPost()
@@ -65,39 +77,37 @@ function printPost() {
         const listPost = document.querySelector(".posts-list");
 
         const printPost = `<div class="post">
-    <div class="post__header">
-        <div class="post-meta">                    
-            <div class="post-meta__icon">
-                <img class="profile-pic" src="${posts[i].author.image}" alt="${posts[i].author.name}">                    
-            </div>
-            <div class="post-meta__data">
-                <div class="post-meta__author">${posts[i].author.name}</div>
-                <div class="post-meta__time">${posts[i].created}</div>
-            </div>                    
-        </div>
-    </div>
-    <div class="post__text">${posts[i].content}</div>
-    <div class="post__image">
-        <img src="${posts[i].media}" alt="">
-    </div>
-    <div class="post__footer">
-        <div class="likes js-likes">
-            <div class="likes__cta">
-                <div class="like-button  js-like-button" data-postid="${posts[i].id}">
-                    <i class="fa-regular fa-heart"></i>
-                    <i class="fa-solid fa-heart hidden"></i>                                
-                    <span class="like-button__label">Like!</span>
+        <div class="post__header">
+            <div class="post-meta">                    
+                <div class="post-meta__icon">
+                    <img class="profile-pic" src="${posts[i].author.image}" alt="${posts[i].author.name}">                    
                 </div>
+                <div class="post-meta__data">
+                    <div class="post-meta__author">${posts[i].author.name}</div>
+                    <div class="post-meta__time">${posts[i].created}</div>
+                </div>                    
             </div>
-            <div class="likes__counter">
-                Piace a <b id="like-counter-${posts[i].id}" class="js-likes-counter">${posts[i].likes}</b> persone
-            </div>
-        </div> 
-    </div>            
-</div>`;
-
-        listPost.innerHTML += printPost;
-
+        </div>
+        <div class="post__text">${posts[i].content}</div>
+        <div class="post__image">
+            <img src="${posts[i].media}" alt="">
+        </div>
+        <div class="post__footer">
+                <div class="likes js-likes">
+                    <div class="likes__cta">
+                        <div class="like-button  js-like-button" data-postid="${posts[i].id}">
+                            <i class="fa-regular fa-heart"></i>
+                            <i class="fa-solid fa-heart hidden"></i>                                
+                            <span class="like-button__label">Like!</span>
+                        </div>
+                    </div>
+                    <div class="likes__counter">
+                        Piace a <b id="like-counter-${posts[i].id}" class="js-likes-counter">${posts[i].likes}</b> persone
+                    </div>
+                </div> 
+            </div>            
+        </div>`;
+    listPost.innerHTML += printPost;
     }
 };
 
@@ -108,31 +118,41 @@ const likeBtn = document.querySelectorAll(".like-button");
 const likeCounter = document.querySelectorAll(".js-likes-counter");
 
 
-for(let i = 0; i < likeBtn.length; i++){
+for (let i = 0; i < likeBtn.length; i++) {
     // riporto le variabili scritte sopra con i
     const btn = likeBtn[i];
     const counter = likeCounter[i];
 
     const likePostId = [];
 
-    btn.addEventListener("click", function(){
+    btn.addEventListener("click", function () {
 
         // Creo una condizione per cambiare il colore gia scritto in css
         // Ed incremento/decremento il counter
 
-        if(btn.classList.contains("like-button--liked")){
+        if (btn.classList.contains("like-button--liked")) {
 
             btn.classList.remove('like-button--liked');
+
             counter.innerHTML = posts[i].likes - 1;
-        }else{
+
+            posts[i].likes = posts[i].likes - 1;
+
+        } else {
 
             btn.classList.add('like-button--liked');
-            counter.innerHTML = posts[i].likes +1;
+
+            counter.innerHTML = posts[i].likes + 1;
+
+            posts[i].likes = posts[i].likes + 1;
+
             likePostId.push(posts[i].id);
         }
         console.log(likePostId);
     });
 
-    
 }
+
+
+
 
