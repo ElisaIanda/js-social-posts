@@ -59,12 +59,12 @@ const posts = [
 // Imposto una funzione con ciclo per stampare i post
 
 printPost()
-function printPost(){
-for (let i = 0; i < posts.length; i++){
+function printPost() {
+    for (let i = 0; i < posts.length; i++) {
 
-    const listPost = document.querySelector(".posts-list");
+        const listPost = document.querySelector(".posts-list");
 
-    const printPost = `<div class="post">
+        const printPost = `<div class="post">
     <div class="post__header">
         <div class="post-meta">                    
             <div class="post-meta__icon">
@@ -96,8 +96,43 @@ for (let i = 0; i < posts.length; i++){
     </div>            
 </div>`;
 
-listPost.innerHTML += printPost;
+        listPost.innerHTML += printPost;
 
-}
+    }
 };
+
+// Creo delle variabili con le classi dell' html per creare una funzione al click 
+// per incrementare il counterLike
+
+const likeBtn = document.querySelectorAll(".like-button");
+const likeCounter = document.querySelectorAll(".js-likes-counter");
+
+
+for(let i = 0; i < likeBtn.length; i++){
+    // riporto le variabili scritte sopra con i
+    const btn = likeBtn[i];
+    const counter = likeCounter[i];
+
+    const likePostId = [];
+
+    btn.addEventListener("click", function(){
+
+        // Creo una condizione per cambiare il colore gia scritto in css
+        // Ed incremento/decremento il counter
+
+        if(btn.classList.contains("like-button--liked")){
+
+            btn.classList.remove('like-button--liked');
+            counter.innerHTML = posts[i].likes - 1;
+        }else{
+
+            btn.classList.add('like-button--liked');
+            counter.innerHTML = posts[i].likes +1;
+            likePostId.push(posts[i].id);
+        }
+        console.log(likePostId);
+    });
+
+    
+}
 
