@@ -63,9 +63,10 @@ for (let i = 0; i < posts.length; i++) {
     // Uso split per dividere created e creare dei sottostringhe di array
     const date = posts[i].created.split("-");
 
-    
     posts[i].created = `${date[2]}-${date[1]}-${date[0]}`;
 }
+
+
 
 
 // Imposto una funzione con ciclo per stampare i post
@@ -107,7 +108,7 @@ function printPost() {
                 </div> 
             </div>            
         </div>`;
-    listPost.innerHTML += printPost;
+        listPost.innerHTML += printPost;
     }
 };
 
@@ -117,13 +118,14 @@ function printPost() {
 const likeBtn = document.querySelectorAll(".like-button");
 const likeCounter = document.querySelectorAll(".js-likes-counter");
 
+// Creo variabile per Array
+const likePostId = [];
+
 
 for (let i = 0; i < likeBtn.length; i++) {
     // riporto le variabili scritte sopra con i
     const btn = likeBtn[i];
     const counter = likeCounter[i];
-
-    const likePostId = [];
 
     btn.addEventListener("click", function () {
 
@@ -133,18 +135,26 @@ for (let i = 0; i < likeBtn.length; i++) {
         if (btn.classList.contains("like-button--liked")) {
 
             btn.classList.remove('like-button--liked');
+            
+            posts[i].likes--;
 
-            counter.innerHTML = posts[i].likes - 1;
+            counter.innerHTML = posts[i].likes;
 
-            posts[i].likes = posts[i].likes - 1;
+            // counter.innerHTML = posts[i].likes -1;
+
+            // posts[i].likes = posts[i].likes - 1;
 
         } else {
 
             btn.classList.add('like-button--liked');
 
-            counter.innerHTML = posts[i].likes + 1;
+            posts[i].likes++;
 
-            posts[i].likes = posts[i].likes + 1;
+            counter.innerHTML = posts[i].likes;
+
+            // counter.innerHTML = posts[i].likes + 1;
+
+            // posts[i].likes = posts[i].likes + 1;
 
             likePostId.push(posts[i].id);
         }
@@ -152,7 +162,5 @@ for (let i = 0; i < likeBtn.length; i++) {
     });
 
 }
-
-
 
 
